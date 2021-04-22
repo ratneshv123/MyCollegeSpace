@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+    <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="signin.css">
+    <link rel="stylesheet" href="usersignincss.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link rel="stylesheet" href="/css/style.css">
+      <title>College Space</title>
+    </head>
+  
+    <body>
+      
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <div class="fixnav">
+    <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
+        <a class="navbar-brand" href="#">College Space</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">News Alerts</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Courses
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">MCA</a>
+                        <a class="dropdown-item" href="#">Ganja mukti kendra</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Yaarana</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Website under Construction</a>
+        </li>
+    </ul>
+        <a class="nav-link" href="#">News Alerts</a>
+        
+        <a class="nav-link active" href="/home">Home</a>
+       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" href="/home">Log out</button>
+    
+</div>
+</nav>
+</div>
+<!-- sidebar -->
+<div class="sidebar-container">
+    <div class="sidebar-logo">
+      <!-- Example single danger button -->
+      <div class="btn-group">
+        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="material-icons" style="vertical-align: bottom;">
+            add
+          </span>Space
+        </button>
+        <div class="dropdown-menu">
+          <span class="dropdown-item" style="font-size: smaller;">create new</span>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#add-secret-modal">Record</a>
+          <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#addPaymentSecret">Payment Card</a>
+        </div>
+      </div>
+    </div>
+    <form method="POST" action="/papersuser">
+        <a  class="sidebar-links" >
+            <div class="sidebar-logo">
+              <span class="material-icons" style="vertical-align: bottom;">
+                article
+              </span><button type="submit" class="btn btn-warning" >Papers</button>
+            </div>
+          </a>     
+    </form>
+    <form method="POST" action="/timetable">
+        <a href="#" class="sidebar-links">
+          <div class="sidebar-logo">
+            <span class="material-icons" style="vertical-align: bottom;">
+              payment
+            </span><button type="submit" class="btn btn-danger" >Time Table</button>
+          </div>
+        </a>
+    </form>
+
+    <form method="POST" action="/availablebooks">
+        <a href="#" class="sidebar-links">
+          <div class="sidebar-logo">
+            <span class="material-icons" style="vertical-align: bottom;">
+              library_books
+            </span><button type="submit" class="btn btn-info">Books</button>
+          </div>
+        </a>
+    </form>
+
+    <form method="POST" action="/buyorsell">
+        <a href="#" class="sidebar-links">
+          <div class="sidebar-logo">
+            <span class="material-icons" style="vertical-align: bottom;">
+              import_contacts
+            </span><button type="submit" class="btn btn-dark">Buy or Sell</button>
+          </div>
+        </a>
+    </form>
+  </div>
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-md">
+        <div class="info-box"> 
+            <button type="button" class="btn btn-warning btn-lg btn-block">MCA Third Sem Papers</button>
+            <br>
+            third Semester
+        </div>
+      </div>
+    </div>
+  </div> 
+    <script src="usersigninjs.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+
+</html>

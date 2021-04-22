@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+    <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="signin.css">
+    <link rel="stylesheet" href="usersignincss.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link rel="stylesheet" href="/css/style.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+      <title>College Space</title>
+    </head>
+  
+    <body>
+      
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="">College Space</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/gotowelcome">Home<span class="sr-only">(current)</span></a>
+                  </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="/gototimetable">Upload TimeTable<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="/gotopapers">Upload Papers</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/gotobooks">Upload Books</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="/gotonotes">Upload Notes</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="/gotouserrequest">User Requests</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="/alladminregitrationrequest">Admin Requests</a>
+                  </li>
+              </ul>
+              <br>
+              <ul class="nav justify-content-end">
+                <li class="nav-item">
+                  <a class="nav-link" href="/home">Sign Out</a>
+                </li>
+              </ul>
+               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Admin Profile</button>
+              
+            </div>
+          </nav>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+  <!-- only for uploading files and working condition  -->
+  <button type="button" class="btn btn-primary btn-lg btn-block">User Requests</button>
+    <hr>
+  
+      <div id="accordion">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+             
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    All Papers Request
+                  </button>
+              <button class="btn btn-success float-right" ><%=userp.length%></button>
+              <a class="btn float-right">Pending Requests-:</a>
+            </h5>
+          </div>
+      
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                <% if(typeof userp !=='undefined') { %>
+                    <% userp.forEach((user)=> { %>
+                        
+                        <form  method="post">
+                            <h5 class="card-title">Name-<%=user.name%> , Semester-<%=user.id%>  &nbsp;
+                                <input type="hidden" name="delname" value="<%=user.name%>">
+                                <input type="hidden" name="delid" value="<%=user.id%>">
+                            <button class="btn btn-danger" type="submit" formaction="/paperacceptrequest">Accept</button>
+                            <button class="btn btn-danger" type="submit" formaction="/paperdeleterequest">Reject</button>
+                        </form>
+                    </h5> 
+                      <embed src="/uploading/mcapapers/<%= user.name%>.pdf" type="application/pdf" width="100%" height="700px" /> 
+                      <br>      
+                      <br> 
+                      <hr>  
+                    <% }) %>
+                <%}%> 
+
+
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                All Books Request
+              </button>
+              <button class="btn btn-success float-right" ><%=userb.length%></button>
+              <a class="btn float-right">Pending Requests-:</a>
+            </h5>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+                <% if(typeof userb !=='undefined') { %>
+                    <% userb.forEach((user)=> { %>
+                        
+                        <form  method="post">
+                            <h5 class="card-title">Name-<%=user.name%> , Semester-<%=user.id%>  &nbsp;
+                                <input type="hidden" name="delname" value="<%=user.name%>">
+                                <input type="hidden" name="delid" value="<%=user.id%>">
+                            <button class="btn btn-danger" type="submit" formaction="/booksacceptrequest">Accept</button>
+                            <button class="btn btn-danger" type="submit" formaction="/booksdeleterequest">Reject</button>
+                        </form>
+                    </h5>
+                        
+                      <embed src="/uploading/books/<%= user.name%>.pdf" type="application/pdf" width="100%" height="700px" /> 
+                      <br>      
+                      <br> 
+                      <hr>  
+                    <% }) %>
+                <%}%> 
+
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                All Notes Request
+              </button>
+              <button class="btn btn-success float-right" ><%=usern.length%></button>
+              <a class="btn float-right">Pending Requests-:</a>
+            </h5>
+          </div>
+          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+                <% if(typeof usern !=='undefined') { %>
+                    <% usern.forEach((user)=> { %>
+                        
+                        <form  method="post">
+                            <h5 class="card-title">Name-<%=user.name%> , Semester-<%=user.id%>  &nbsp;
+                                <input type="hidden" name="delname" value="<%=user.name%>">
+                                <input type="hidden" name="delid" value="<%=user.id%>">
+                            <button class="btn btn-danger" type="submit" formaction="/notesacceptrequest">Accept</button>
+                            <button class="btn btn-danger" type="submit" formaction="/notesdeleterequest">Reject</button>
+                        </form>
+
+                    </h5>
+                        
+                      <embed src="/uploading/notes/<%= user.name%>.pdf" type="application/pdf" width="100%" height="700px" /> 
+                      <br>      
+                      <br> 
+                      <hr>  
+                    <% }) %>
+                <%}%> 
+ </div>
+          </div>
+        </div>
+      </div>
+   
+    <script src="usersigninjs.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+
+</html>

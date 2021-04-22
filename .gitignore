@@ -1,0 +1,4 @@
+node_modules/
+public/uploading
+db/
+.env

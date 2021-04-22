@@ -1,0 +1,118 @@
+.herapheri{
+    text-align: center;
+    padding: 10px;
+}
+
+
+form-control{
+    text-align: center;
+}
+
+.home{
+    text-align: center;
+}
+
+.form-group{
+    text-align: center;
+}
+
+/* usersignin */
+.sidebar-container {
+    position: fixed;
+    width: 200px;
+    height: 100%;
+    top: 56px;
+    left: 0;
+    background-color: rgb(118, 118, 228);
+    color: #fff;
+}
+.sidebar-logo{
+    padding: 20px 20px 20px 30px;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+}
+.sidebar-logo:hover{
+    background-color: rgb(88, 88, 197);
+    color: white;
+}
+
+.sidebar-links {
+    color: white;
+}
+
+
+/* fixing the navigation bar */
+.fixnav{
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.info-box {
+    background-color:lightskyblue;
+    height: 1100px;
+    margin-left: 80px;
+    margin-bottom: 20px;
+    width: 1150px;
+}
+
+.info-boxbooks {
+    background-color:lightskyblue;
+    
+    margin-left: 80px;
+    margin-bottom: 20px;
+    width: 1150px;
+}
+
+
+/* footer */
+ .container-fluid {
+     overflow: hidden;
+     margin-top: 250px;
+     background: #262626;
+     color: #627482 !important;
+     margin-bottom: 0;
+     padding-bottom: 0
+ }
+
+ small {
+     font-size: calc(12px + (15 - 12) * ((100vw - 360px) / (1600 - 360))) !important
+ }
+
+ .bold-text {
+     color: #989c9e !important
+ }
+
+ .mt-55 {
+     margin-top: calc(50px + (60 - 50) * ((100vw - 360px) / (1600 - 360))) !important
+ }
+
+ h3 {
+     font-size: calc(34px + (40 - 34) * ((100vw - 360px) / (1600 - 360))) !important
+ }
+
+ .social {
+     font-size: 21px !important
+ }
+
+ .rights {
+     font-size: calc(10px + (12 - 10) * ((100vw - 360px) / (1600 - 360))) !important
+ }
+
+
+
+ /* updateanddeletepapers */
+
+.updateanddeletepapers{
+    height: 900px;
+    margin-left: 80px;
+    margin-bottom: 20px;
+    width: 400px;
+}
+
+
+/* setting the button of usersignin */
+
+.letresizebutton{
+    width: 120px;
+}

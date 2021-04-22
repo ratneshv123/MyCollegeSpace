@@ -1,0 +1,139 @@
+<div class="container col-sm-12" id="mainform">
+    <div id="signupbox" style=" margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                                     
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title">Upload Image</div>
+            </div> 
+            <div class="panel-body" >
+                <form class="form-horizontal" role="form" method="post" action="/prohumai" enctype="multipart/form-data">
+                    <% if (message.length > 0) { %>
+                        <div class="alert alert-<%=status  %> col-sm-12"><%= message %></div>
+                    <% } %>
+                     <div class="form-group">
+                        <label for="image" class="col-md-3 control-label">Profile Image</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="file" name="profile" accept="" />
+                        </div>
+                    </div>                                
+                    <div class="form-group">
+                        <!-- Button -->                                       
+                        <div class="col-md-offset-3 col-md-9">
+                            <button id="btn-signup" type="submit" class="btn btn-info"><i class="icon-hand-right"></i> &nbsp Upload</button>
+                        </div>
+                    </div>  
+                </form>
+
+             </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- dropdown -->
+
+<div class="container my-4">
+
+    <p class="font-weight-bold">An example of bootstrap nested dropdown. Easy to implement and customize. Examples of basic and advanced usage.</p>
+
+    <p>
+      <strong>Detailed documentation and more examples you can find in our 
+      <a href="https://mdbootstrap.com/docs/jquery/components/dropdowns/" target="_blank">Bootstrap Dropdown Docs</a>
+      </strong> 
+    </p>
+    
+    	<hr>
+
+    <p class="font-weight-bold">Basic example</p>
+    
+    
+<div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown
+            </button>
+            <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                <li class="dropdown-item"><a href="#">Some action</a></li>
+                <li class="dropdown-item"><a href="#">Some other action</a></li>
+                <li class="dropdown-divider"></li>
+                <li class="dropdown-submenu">
+                  <a  class="dropdown-item" tabindex="-1" href="#">Hover me for more options</a>
+                  <ul class="dropdown-menu">
+                    <li class="dropdown-item"><a tabindex="-1" href="#">Second level</a></li>
+                    <li class="dropdown-submenu">
+                      <a class="dropdown-item" href="#">Even More..</a>
+                      <ul class="dropdown-menu">
+                          <li class="dropdown-item"><a href="#">3rd level</a></li>
+                            <li class="dropdown-submenu"><a class="dropdown-item" href="#">another level</a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-item"><a href="#">4th level</a></li>
+                                <li class="dropdown-item"><a href="#">4th level</a></li>
+                                <li class="dropdown-item"><a href="#">4th level</a></li>
+                            </ul>
+                          </li>
+                            <li class="dropdown-item"><a href="#">3rd level</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown-item"><a href="#">Second level</a></li>
+                    <li class="dropdown-item"><a href="#">Second level</a></li>
+                  </ul>
+                </li>
+              </ul>
+        </div>
+
+  </div>
+
+
+
+  <!-- its css -->
+
+  
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
+}

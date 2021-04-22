@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+    <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="signin.css">
+    <link rel="stylesheet" href="usersignincss.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link rel="stylesheet" href="/css/style.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+      <title>College Space</title>
+    </head>
+  
+    <body>
+      
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="">College Space</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/gotowelcome">Home<span class="sr-only">(current)</span></a>
+                  </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="/gototimetable">Upload TimeTable<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="/gotopapers">Upload Papers</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/gotobooks">Upload Books</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="/gotonotes">Upload Notes</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="/alluserrequests">User Requests</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="/alladminregitrationrequest">Admin Requests</a>
+                  </li>
+              </ul>
+              <br>
+              <ul class="nav justify-content-end">
+                <li class="nav-item">
+                  <a class="nav-link" href="/home">Sign Out</a>
+                </li>
+              </ul>
+               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Admin Profile</button>
+              
+            </div>
+          </nav>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+  <!-- only for uploading files and working condition  -->
+  <button type="button" class="btn btn-info btn-lg btn-block">Books</button>
+    <hr>
+
+
+    <div class="row">
+        <div class="col-sm-6">
+          <div class="card">
+              <div class="card-body">
+                <div class="updateanddeletepapers">
+                    <br>
+                        <h1 class="text-center">Upload Books</h1>
+                        <form action="/upbooks" method="post" enctype="multipart/form-data">
+                          <div class="form-group">
+                              <label for="file1">MCA Section</label>
+                              <input type="file" name="file" required id="" class="form-control">
+                              <input type="text" placeholder="Semester" required id="" class="form-control" name="paperid">
+                          </div>
+                          <div class="form-group">
+                              <button class="btn btn-info btn-block">
+                                  Upload Book
+                              </button>
+                          </div>
+                      </form>
+                      <br> 
+                      <br>
+      
+      
+      
+                    
+                </div>    
+    
+              </div>      
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              
+                <h5>Notes</h5>
+                <form id="tableForm" action="/watchbooks" method="post">
+                    <select class="btn btn-danger" data-style="btn-info" name="semester">
+                            <option name="mca" value="1">MCA-Semester 1</option>
+                            <option name="mca" value="2">MCA-Semester 2</option>
+                            <option name="mca" value="3">MCA-Semester 3</option>
+                            <option name="mca" value="4">MCA-Semester 4</option>
+                            <option name="mca" value="5">MCA-Semester 5</option>
+                            <option name="mca" value="6">MCA-Semester 6</option>
+                    </select>
+                    <input type="hidden" name="course" value="mca">
+                    <input type="submit" class="btn btn-info" />
+                </form>
+                
+                <hr>
+            <% if(typeof users !=='undefined') { %>
+                <% users.forEach((user)=> { %>
+                    
+                    <form action="/deletethisbook" method="post">
+                        <h5 class="card-title">Name-<%=user.name%> , Semester-<%=user.id%>  &nbsp;
+                            <input type="hidden" name="delbookname" value="<%=user.name%>">
+                            <input type="hidden" name="delbookid" value="<%=user.id%>">
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </form>
+                </h5>
+                    
+                  <embed src="/uploading/books/<%= user.name%>.pdf" type="application/pdf" width="100%" height="700px" /> 
+                  <br>      
+                  <br> 
+                  <hr>  
+                <% }) %>
+            <%}%> 
+
+        </div>
+          </div>
+        </div>
+      </div>
+
+
+
+  
+   
+    <script src="usersigninjs.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+
+</html>
