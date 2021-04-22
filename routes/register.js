@@ -8,7 +8,7 @@ const fs = require('fs');
 const Joi = require('joi');
 const { ValidationError } = require('joi');
 //const connection = require('../db/db');
-
+  
 
 router.get('/signuup', (req, res) => {
     var message = "";
