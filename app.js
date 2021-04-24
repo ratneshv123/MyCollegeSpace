@@ -1,6 +1,8 @@
 require('dotenv').config()
 const express = require('express');
 const app = express();
+const cookieParser = require('cookie-parser');
+// const session = require('express-session');
 const home = require('./routes/home');
 const register = require('./routes/register');
 const fs = require('fs');
@@ -28,7 +30,7 @@ const updownallbooks = require('./routes/admin/welcome/updownbooks/updownallbook
 const updownallnotes = require('./routes/admin/welcome/updownnotes/updownallnotes');
 const updownalluserrequest = require('./routes/admin/welcome/updownuserrequest/updownalluserrequest');
 
-
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(express.static('public'));

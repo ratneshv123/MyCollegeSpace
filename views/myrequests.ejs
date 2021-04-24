@@ -29,50 +29,36 @@
         </button>
         
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Courses
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">MCA</a>
-                        <a class="dropdown-item" href="#">Ganja mukti kendra</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Yaarana</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Website under Construction</a>
-        </li>
-    </ul>
-    <form action="/homechle" method="get"> 
-        <button class="btn btn-primary my-2 my-sm-0" type="submit">Log out</button>
-    </form>
-</div>
+            <ul class="navbar-nav mr-auto">   
+            </ul>
+       <form action="/homechle" method="get"> 
+         <button class="btn btn-primary my-2 my-sm-0" type="submit">Log out</button>
+       </form>
+       </div>
 </nav>
 </div>
 <!-- sidebar -->
 <div class="sidebar-container">
-    <div class="sidebar-logo">
-      <!-- Example single danger button -->
-      <div class="btn-group">
-        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="material-icons" style="vertical-align: bottom;">
-            add
-          </span>Space
-        </button>
-        <div class="dropdown-menu">
-          <span class="dropdown-item" style="font-size: smaller;">create new</span>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#add-secret-modal">Record</a>
-          <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#addPaymentSecret">Payment Card</a>
-        </div>
-      </div>
-    </div>
+    <form method="POST" action="/viewinguseralldetails">
+        <a  class="sidebar-links" >
+            <div class="sidebar-logo">
+                  <button type="submit" class="btn btn-info" aria-haspopup="true" aria-expanded="false">
+                    <span class="material-icons" style="vertical-align: bottom;">
+                      add
+                    </span>Your Profile
+                  </button>
+            </div>
+          </a>     
+    </form>
+    <form method="POST" action="/yourpersonalspace">
+        <a  class="sidebar-links" >
+            <div class="sidebar-logo">
+              <span class="material-icons" style="vertical-align: bottom;">
+                article
+              </span><button type="submit" class="btn btn-success letresizebutton" >Your Space</button>
+            </div>
+          </a>     
+    </form>
     <form method="POST" action="/papersuser">
         <a  class="sidebar-links" >
             <div class="sidebar-logo">

@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 const connection = require('../../db/db');
-router.get('/routes/userbooks', (req, res) => {
+
+router.get('/routes/userbooks', authenticateToken, (req, res) => {
+    console.log(req.user_auth);
     res.render('books'); 
 });
 
@@ -46,12 +49,14 @@ router.post('/lookbooks', async(req, res) => {
      res.render('books',{users:alluser});
 });
 
-router.post('/watchtheuserbook',async(req, res) => {
+router.post('/watchtheuserbook',authenticateToken,async(req, res) => {
     console.log(req.body);
+    console.log('vishalharami');
     const user = {
         name: req.body.name,
         id:req.body.id
     }
+    
     const data = [[user.name], [user.id]];
     const alluser =await new Promise((resolve, reject) => {
         const query = 'SELECT * from books where name=? AND id=?';
@@ -63,5 +68,27 @@ router.post('/watchtheuserbook',async(req, res) => {
     console.log(alluser);
     res.render('userviewingbook',{users:alluser}); 
 });
+
+
+function authenticateToken(req, res, next) {
+    console.log(req.cookies);
+    const token = req.cookies.auth_token;
+    if (token) {
+        // const token = req.cookies.auth_token;
+        const  user_auth  = jwt.verify(token, process.env.SECRET_KEY || "UNSECURED_JWT_PRIVATE_TOKEN");
+    //    const user= jwt.verify(token, process.env.SECRET_KEY, (err, payload) => {
+    //         // const id = payload.id;
+    //         const user = {
+    //             email: payload.email
+    //         }
+            req.user_auth = user_auth;
+            next();
+    //     });   
+    }
+    else {
+        res.redirect('/');
+    }
+}
+
 
 module.exports = router;

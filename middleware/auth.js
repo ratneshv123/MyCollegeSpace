@@ -1,21 +1,20 @@
 // if user trying to get private routes authenticate the route first then allow user to enter in
-module.exports.auth = async function(req, res, next) {
-    let token = req.cookies.auth_token;
-    if(!token) {
-        return res.status(401).json({ok: false, message: 'Unauthorized'});
+function authenticateToken(req, res, next) {
+    console.log(req.cookies);
+    const token = req.cookies.auth_token;
+    if (token) {
+        // const token = req.cookies.auth_token;
+        const  user_auth  = jwt.verify(token, process.env.SECRET_KEY || "UNSECURED_JWT_PRIVATE_TOKEN");
+    //    const user= jwt.verify(token, process.env.SECRET_KEY, (err, payload) => {
+    //         // const id = payload.id;
+    //         const user = {
+    //             email: payload.email
+    //         }
+            req.user_auth = user_auth;
+            next();
+    //     });   
     }
-    try {
-        const { email } = jwt.verify(token, process.env.JWT_PRIVATE_TOKEN || "UNSECURED_JWT_PRIVATE_TOKEN");
-        const query = "";
-        
-        const patient = (await Patient.find({email: email}, ["id", "email", "phoneNo", "firstName", "lastName", "gender", "dob"]))[0];
-        if (!patient) {
-            return res.status(401).json({ok: false, message: 'Sorry, you are not allowed to access this page'});
-        }
-        req.patient = patient;
-        return next();
-    } catch (error) {
-        return next(error);
+    else {
+        res.redirect('/');
     }
 }
-
