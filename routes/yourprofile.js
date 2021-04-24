@@ -1,27 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const connection = require('../db/db');
 
-router.get('/', (req, res) => {
-    res.clearCookie('auth_token');
-    var message = "";
-    res.render('home',{message:message});
-});
+router.post('/viewinguseralldetails', authenticateToken,async (req, res) => {
+    console.log(req.user_auth);
+    const allUsers = await new Promise((resolve, reject)=> {
+        const query = `SELECT email,name,cllgid FROM signup WHERE email=?`;
+        connection.query(query,req.user_auth.email,(err, result)=>{
+            if (err) reject(new Error('Something failed (Record Insertion) :' + err));
+            resolve (result);
+        });
+    });
+    console.log(allUsers);
+    res.render('yourprofile',{user:allUsers});
+})
 
-router.get('/home', (req, res) => {
-    res.clearCookie('auth_token');
-    var message = "";
-    res.render('home',{message:message});
-});
-
-router.get('/homechle', (req, res) => {
-    res.clearCookie('auth_token');
-    var message = "";
-    res.render('home',{message:message});
-});
 
 function authenticateToken(req, res, next) {
-    console.log(req.cookies);
+    console.log(req.cookies);  
     const token = req.cookies.auth_token;
     if (token) {
         // const token = req.cookies.auth_token;

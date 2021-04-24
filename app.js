@@ -29,6 +29,8 @@ const updownalltimetable = require('./routes/admin/welcome/updowntimetable/updow
 const updownallbooks = require('./routes/admin/welcome/updownbooks/updownallbooks');
 const updownallnotes = require('./routes/admin/welcome/updownnotes/updownallnotes');
 const updownalluserrequest = require('./routes/admin/welcome/updownuserrequest/updownalluserrequest');
+const yourprofile = require('./routes/yourprofile');
+const yourspace = require('./routes/yourspace');
 
 app.use(cookieParser());
 app.use(express.json());
@@ -57,6 +59,8 @@ app.use(findthepaper);
 app.use(updownallbooks);
 app.use(updownallnotes);
 app.use(updownalluserrequest);
+app.use(yourprofile);
+app.use(yourspace);
 
 
 const port = process.env.PORT || 3000;

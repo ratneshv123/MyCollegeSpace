@@ -157,10 +157,11 @@
                 <h5 class="mb-0">
                   <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                     <h5 class="card-title">MCA-<%=user.name%> , Semester-<%=user.id%></h5>
-                    <form action="/watchthetimetable" method="POST">
+                    <form  method="POST">
                     <input type="text" value="<%=user.name%>" placeholder="<%=user.name%>" name="name" hidden>
                     <input type="text"  value="<%=user.id%>" placeholder="<%=user.name%>" name="id" hidden>
-                    <button type="submit" class="btn btn-danger float-right">View TimeTable</button>
+                    <button type="submit" formaction="/watchthetimetable" class="btn btn-danger float-right">View TimeTable</button>
+                    <button type="submit" formaction="/movetimetable" style="margin-right:5px" class="btn btn-success float-right">Move to Your Space</button>
                     </form>
                   </button>
                 </h5>

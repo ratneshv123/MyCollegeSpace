@@ -3,9 +3,10 @@ const router = express.Router();
 const multer = require("multer");
 const fs = require('fs');
 var path = require('path');
+const jwt = require('jsonwebtoken');
 const connection = require('../../db/db');
 
-router.get('/gotomyrequests', (req, res) => {
+router.get('/gotomyrequests',authenticateToken, (req, res) => {
     res.render('myrequests'); 
 });
 
@@ -19,7 +20,7 @@ router.post('/makerequest', (req, res) => {
   
  
   
-router.post("/upuserpapers", (req, res) => {
+router.post("/upuserpapers",authenticateToken, (req, res) => {
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {
           cb(null, "public/uploading/mcapapers");
@@ -74,7 +75,7 @@ router.post("/upuserpapers", (req, res) => {
   });
 
 
-router.post("/upusernotes", (req, res) => {
+router.post("/upusernotes",authenticateToken, (req, res) => {
       
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {
@@ -131,7 +132,7 @@ router.post("/upusernotes", (req, res) => {
   });
 
 
-router.post("/upuserbooks", (req, res) => {
+router.post("/upuserbooks",authenticateToken, (req, res) => {
       
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {
@@ -187,5 +188,24 @@ router.post("/upuserbooks", (req, res) => {
     res.redirect('/gotomyrequests');
 });
   
+function authenticateToken(req, res, next) {
+    console.log(req.cookies);
+    const token = req.cookies.auth_token;
+    if (token) {
+        // const token = req.cookies.auth_token;
+        const  user_auth  = jwt.verify(token, process.env.SECRET_KEY || "UNSECURED_JWT_PRIVATE_TOKEN");
+    //    const user= jwt.verify(token, process.env.SECRET_KEY, (err, payload) => {
+    //         // const id = payload.id;
+    //         const user = {
+    //             email: payload.email
+    //         }
+            req.user_auth = user_auth;
+            next();
+    //     });   
+    }
+    else {
+        res.redirect('/');
+    }
+}
 
 module.exports = router;

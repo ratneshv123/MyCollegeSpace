@@ -8,6 +8,42 @@ router.get('/routes/userbooks', authenticateToken, (req, res) => {
     res.render('books'); 
 });
 
+router.post('/movebooks',authenticateToken, async(req, res) => {
+    console.log(req.user_auth);
+    console.log(req.body);
+    var books = "books";
+    var loc = 'public\\uploading\\books\\' + req.body.name + '.pdf';
+    console.log(loc);
+    user = { 
+        typed:books,
+        name: req.body.name,
+        location:loc,
+        semester: req.body.id,
+        email:req.user_auth.email
+    };
+    console.log(user);
+    new Promise((resolve, reject)=> {
+            //console.log(this);
+            const query = `INSERT INTO yourspace  SET ?`;
+               connection.query(query, user, (err, result)=> {
+                   if (err) reject(new Error('Something failed (Record Insertion) :' + err));
+                    resolve (result);
+                   });
+    });
+    var pre = 2;
+    const allUsers = await new Promise((resolve, reject)=> {
+        //console.log(this);
+        const query = `SELECT * FROM books where presence=?`;
+        
+        connection.query(query,pre, (err, result)=>{
+            if (err)    reject(new Error('Something failed (Record Insertion) :'+err));
+            resolve (result);
+        });
+    });
+    console.log(allUsers);
+    res.render('books', {users: allUsers});
+});
+
 router.post('/availablebooks', (req, res) => {
     //  console.log(req.body);
     res.redirect('/routes/userbooks');
@@ -31,7 +67,7 @@ router.get('/lookingpdf', async (req, res) => {
 
 
 
-router.post('/lookbooks', async(req, res) => {
+router.post('/lookbooks',authenticateToken, async(req, res) => {
     console.log(req.body);
     var pre = 2;
     const user = {

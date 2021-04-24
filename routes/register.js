@@ -18,7 +18,7 @@ router.get('/signuup', (req, res) => {
 });
 
 router.get('/homechle', authenticateToken, (req, res) => {
-    res.clearCookie('jwt');
+    res.clearCookie('auth_token');
     res.render('home');
 });
 
@@ -98,8 +98,6 @@ router.post('/signupuser', async (req, res) => {
         Email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).min(11).max(100).required(),
         Password: Joi.string().min(3).max(30)
     });
-
-    // schema.validate({ email: req.body.Iemail, password: req.body.Ipassword });
     
     const { error, value } = schema.validate({ Name:req.body.Iname,CollegeId:req.body.Icllgid,Email: req.body.Iemail, Password: req.body.Ipassword });
 
@@ -122,33 +120,6 @@ router.post('/signupuser', async (req, res) => {
         email: req.body.Iemail
     };
 
-    // console.log('hero hu mai');
-    // const kali = _.pick(user, ['name', 'email']);
-    // console.log(kali);
-    // console.log('hero hu mai');
-
-
-    // // send json web token in response...
-    // let maxAge = 60*60*24 ;
-    // let token = generateAuthToken(user);
-    // res.cookie('auth_token', token, {httpOnly: true, maxAge: 1000*maxAge});
-
-    // const token =await generatetoken();
-    // generatetoken = () => {
-    //     try {
-    //         const token = jwt.sign({ _id: this._id.toString() }, "mynameisratneshvishwakarma");
-    //         console.log(token);
-    //     } catch (error) {
-    //         res.send("error" + error);
-    //         console.log("error" + error); 
-    //     }
-    // }
- 
-    
-
-    // const token =await generateAuthToken(user);
-    // console.log(token);
-
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(user.password, salt);
 
@@ -170,48 +141,8 @@ router.post('/signupuser', async (req, res) => {
 });
 
 
-
-// function generateAuthToken(user) {
-//         const expiresIn = 60 * 60 * 240; // an hour
-//         let token = jwt.sign({
-//             email: user.email
-//         }, process.env.JWT_PRIVATE_TOKEN || "UNSECURED_JWT_PRIVATE_TOKEN", { expiresIn: expiresIn });
-//          console.log(token);
-//         return token; 
-// }
-
-
-// function generateAuthToken(user) {
-//         const expiresIn = 60 * 60 * 240; // an hour
-//         let token = jwt.sign({
-//             email: user.email
-//         }, process.env.JWT_PRIVATE_TOKEN || "UNSECURED_JWT_PRIVATE_TOKEN", {expiresIn: expiresIn});
-//         return token;  
-// }
-
-// const jwt = require('jsonwebtoken');
-
-// const createToken = async () => {
-//     const token = await jwt.sign({ _id: "23452345234523" }, "mynameisratneshvishwakarma", {
-//         expiresIn:"1 minute" 
-//     });
-//     console.log(token);
-
-//     const userver = await jwt.verify(token, "mynameisratneshvishwakarma");
-//     console.log(userver);
-// }
-
-// createToken();
-
-
 router.post('/adminsignup',async(req, res) => {
     console.log(req.body);
-
-    
-    // let usert = await usert.find({ username: req.body.username });
-    // if (usert) return res.status(400).send('User already registered');
-
-    // validation start here
     
     const schema = Joi.object({       
         Name: Joi.string().min(3).max(30).required(),
@@ -221,7 +152,6 @@ router.post('/adminsignup',async(req, res) => {
         Password: Joi.string().min(3).max(30)
     });
 
-    // schema.validate({ email: req.body.Iemail, password: req.body.Ipassword });
     
     const { error, value } = schema.validate({ Name:req.body.Iname,Email: req.body.Iemail,MobileNo:req.body.Imobno,UserName:req.body.Iusername, Password: req.body.Ipassword });
 
@@ -231,8 +161,6 @@ router.post('/adminsignup',async(req, res) => {
         var success = "";
         console.log(value.Name);
         res.render('signuup', { message: error.details[0].message, success });
-        
-        // res.status(400).send(error.details[0].message);
         return;    
     }
        
