@@ -16,27 +16,22 @@ router.post('/viewinguseralldetails', authenticateToken,async (req, res) => {
     res.render('yourprofile',{user:allUsers});
 })
 
-
 function authenticateToken(req, res, next) {
-    console.log(req.cookies);  
-    const token = req.cookies.auth_token;
-    if (token) {
-        // const token = req.cookies.auth_token;
-        const user_auth = jwt.verify(token, process.env.SECRET_KEY || "UNSECURED_JWT_PRIVATE_TOKEN");
-        // console.log('hewe');
-        // console.log(user_auth);
-        // console.log('hewe');
-    //    const user= jwt.verify(token, process.env.SECRET_KEY, (err, payload) => {
-    //         // const id = payload.id;
-    //         const user = {
-    //             email: payload.email
-    //         }
-            req.user_auth = user_auth;
+    console.log(req.cookies);
+try {
+        const token = req.cookies.auth_token;
+        if (token)
+        {
+            const  user_auth  = jwt.verify(token, process.env.SECRET_KEY || "UNSECURED_JWT_PRIVATE_TOKEN");
+            req.user_auth = user_auth; 
             next();   
-    //     });   
+    } else
+        {
+            res.redirect('/');
+        }    
     }
-    else {
-        res.redirect('/');
+    catch (error) {
+            res.redirect('/');
     }
 }
 

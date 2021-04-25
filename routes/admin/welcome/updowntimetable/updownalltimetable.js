@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const multer = require("multer");
+const jwt = require('jsonwebtoken');
 const fs = require('fs');
 var path = require('path');
 const connection = require('../../../../db/db');
 
 
-router.post('/updeltimetable', async(req, res) => {
+router.post('/updeltimetable',authenticateToken, async(req, res) => {
     const alluser =await new Promise((resolve, reject) => {
         const query = 'SELECT * from timetable';
         connection.query(query, (err, result) => {
@@ -18,7 +19,7 @@ router.post('/updeltimetable', async(req, res) => {
 });
 
 
-router.get("/uploadsuccesstimetable", async(req, res) => {
+router.get("/uploadsuccesstimetable",authenticateToken, async(req, res) => {
     const alluser =await new Promise((resolve, reject) => {
         const query = 'SELECT * from timetable';
         connection.query(query, (err, result) => {
@@ -44,7 +45,7 @@ var upload = multer({
   storage: storage,
 }).single('file');
 
-router.post("/uptimetable", (req, res) => {
+router.post("/uptimetable",authenticateToken, (req, res) => {
     console.log(req.body);
     let user;
   upload(req, res, function (err) {
@@ -85,7 +86,7 @@ router.post("/uptimetable", (req, res) => {
     res.redirect('/uploadsuccesstimetable');
 });
 
-router.post('/deletethistt', (req, res) => {
+router.post('/deletethistt',authenticateToken, (req, res) => {
     console.log(req.body);
     const user = {
         name:req.body.Iname,
@@ -104,5 +105,25 @@ router.post('/deletethistt', (req, res) => {
     });
     res.redirect('/uploadsuccesstimetable');
 });
+
+
+function authenticateToken(req, res, next) {
+    console.log(req.cookies);
+try {
+        const token = req.cookies.auth_token;
+        if (token)
+        {
+            const  user_auth  = jwt.verify(token, process.env.SECRET_KEY || "UNSECURED_JWT_PRIVATE_TOKEN");
+            req.user_auth = user_auth; 
+            next();   
+    } else
+        {
+            res.redirect('/adminloginpanel');
+        }    
+    }
+    catch (error) { 
+            res.redirect('/adminloginpanel');
+    }
+}
 
 module.exports = router;

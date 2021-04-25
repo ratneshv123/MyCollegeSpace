@@ -2,35 +2,36 @@ const express = require('express');
 const router = express.Router();
 const multer = require("multer");
 const fs = require('fs');
+const jwt = require('jsonwebtoken');
 var path = require('path');
 const connection = require('../../../../db/db');
 
 
 
-router.post('/updelbooks', (req,res) => {
+router.post('/updelbooks',authenticateToken, (req,res) => {
     res.render('updateanddeletebooks');
 });
 
-router.get('/uploadsuccessbooks', (req, res) => {
+router.get('/uploadsuccessbooks',authenticateToken, (req, res) => {
     res.render('updateanddeletebooks'); 
 });
 
 //idhr se shuru hai 
 
-router.get('/gotobooks', (req, res) => {
+router.get('/gotobooks',authenticateToken, (req, res) => {
     res.render('updateanddeletebooks'); 
 });
 
-router.get('/gotouserrequest', (req, res) => {
+router.get('/gotouserrequest',authenticateToken, (req, res) => {
     res.render('updateanddeleteuserrequest'); 
 });
 
 
-router.get('/gotowelcome', (req, res) => {
+router.get('/gotowelcome',authenticateToken, (req, res) => {
     res.render('welcomeadmin'); 
 });
 
-router.get('/gototimetable',async(req, res) => {
+router.get('/gototimetable',authenticateToken,async(req, res) => {
     const alluser = await new Promise((resolve, reject) => {
         const query = 'SELECT * FROM timetable';
         connection.query(query, (err, result) => {
@@ -43,11 +44,11 @@ router.get('/gototimetable',async(req, res) => {
 
 
 
-router.get('/gotopapers', (req, res) => {
+router.get('/gotopapers',authenticateToken, (req, res) => {
     res.render('updateanddeletepapers'); 
 });
 
-router.get('/gotonotes', (req, res) => {
+router.get('/gotonotes',authenticateToken, (req, res) => {
     res.render('updateanddeletenotes'); 
 });
 
@@ -66,7 +67,7 @@ var upload = multer({
   storage: storage,
 }).single('file');
 
-router.post("/upbooks", (req, res) => {
+router.post("/upbooks",authenticateToken, (req, res) => {
     console.log(req.body);
     let user;
   upload(req, res, function (err) {
@@ -112,7 +113,7 @@ router.post("/upbooks", (req, res) => {
 
 // watching the semester wise books route is below here 
 
-router.post('/watchbooks', async(req, res) => {
+router.post('/watchbooks',authenticateToken, async(req, res) => {
     console.log(req.body);
     var pre = 2;
     const user = {
@@ -134,7 +135,7 @@ router.post('/watchbooks', async(req, res) => {
 
 // deleting the books of particular semester
 
-router.post('/deletethisbook', async(req, res) => {
+router.post('/deletethisbook',authenticateToken, async(req, res) => {
     console.log(req.body);
 
     console.log('hell');    
@@ -174,5 +175,23 @@ router.post('/deletethisbook', async(req, res) => {
 });
 
 
+function authenticateToken(req, res, next) {
+    console.log(req.cookies);
+try {
+        const token = req.cookies.auth_token;
+        if (token)
+        {
+            const  user_auth  = jwt.verify(token, process.env.SECRET_KEY || "UNSECURED_JWT_PRIVATE_TOKEN");
+            req.user_auth = user_auth; 
+            next();   
+    } else
+        {
+            res.redirect('/adminloginpanel');
+        }    
+    }
+    catch (error) { 
+            res.redirect('/adminloginpanel');
+    }
+}
 
 module.exports = router;

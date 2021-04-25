@@ -2,16 +2,17 @@ const express = require('express');
 const router = express.Router();
 const multer = require("multer");
 const fs = require('fs');
+const jwt = require('jsonwebtoken');
 var path = require('path');
 const connection = require('../../../../db/db');
 
 //idhr se shuru hai 
 
-router.get('/updelrequest', (req, res) => {
+router.get('/updelrequest',authenticateToken,(req, res) => {
     res.render('updateanddeleteuserrequest'); 
 });
 
-router.get('/alluserrequests', async (req, res) => {
+router.get('/alluserrequests',authenticateToken, async (req, res) => {
     var pre = 1;
     const alluser = await new Promise((resolve, reject) => {
         const query = 'select * from mcapapers where presence=?';
@@ -37,7 +38,7 @@ router.get('/alluserrequests', async (req, res) => {
     res.render('updateanddeleteuserrequest', { userp: alluser , userb:alluser1, usern:alluser2});
 });
 
-router.post('/prequest', async (req, res) => {
+router.post('/prequest',authenticateToken, async (req, res) => {
     var pre = 1;
     const alluser = await new Promise((resolve, reject) => {
         const query = 'select * from mcapapers where presence=?';
@@ -64,7 +65,7 @@ router.post('/prequest', async (req, res) => {
 });
 
 
-router.post('/paperdeleterequest', async (req, res) => {
+router.post('/paperdeleterequest',authenticateToken, async (req, res) => {
     console.log(req.body);
     var pre = 3;
     const user = {
@@ -95,7 +96,7 @@ router.post('/paperdeleterequest', async (req, res) => {
 });
 
 
-router.post('/paperacceptrequest', async(req, res) => {
+router.post('/paperacceptrequest',authenticateToken, async(req, res) => {
     console.log(req.body);
     var pre = 2;
     const user = {
@@ -118,7 +119,7 @@ router.post('/paperacceptrequest', async(req, res) => {
 
 // notes request
 
-router.post('/notesdeleterequest', async (req, res) => {
+router.post('/notesdeleterequest',authenticateToken, async (req, res) => {
     console.log(req.body);
     var pre = 3;
     const user = {
@@ -149,7 +150,7 @@ router.post('/notesdeleterequest', async (req, res) => {
 });
 
 
-router.post('/notesacceptrequest', async(req, res) => {
+router.post('/notesacceptrequest',authenticateToken, async(req, res) => {
     console.log(req.body);
     var pre = 2;
     const user = {
@@ -173,7 +174,7 @@ router.post('/notesacceptrequest', async(req, res) => {
 // books request
 
 
-router.post('/booksdeleterequest', async (req, res) => {
+router.post('/booksdeleterequest',authenticateToken, async (req, res) => {
     console.log(req.body);
     var pre = 3;
     const user = {
@@ -204,7 +205,7 @@ router.post('/booksdeleterequest', async (req, res) => {
 });
 
 
-router.post('/booksacceptrequest', async(req, res) => {
+router.post('/booksacceptrequest',authenticateToken, async(req, res) => {
     console.log(req.body);
     var pre = 2;
     const user = {
@@ -223,7 +224,23 @@ router.post('/booksacceptrequest', async(req, res) => {
     res.redirect('/alluserrequests');
 });
 
-
-
+function authenticateToken(req, res, next) {
+    console.log(req.cookies);
+try {
+        const token = req.cookies.auth_token;
+        if (token)
+        {
+            const  user_auth  = jwt.verify(token, process.env.SECRET_KEY || "UNSECURED_JWT_PRIVATE_TOKEN");
+            req.user_auth = user_auth; 
+            next();   
+    } else
+        {
+            res.redirect('/adminloginpanel');
+        }    
+    }
+    catch (error) { 
+            res.redirect('/adminloginpanel');
+    }
+}
 
 module.exports = router;

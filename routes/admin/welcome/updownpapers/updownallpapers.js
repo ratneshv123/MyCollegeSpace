@@ -2,19 +2,20 @@ const express = require('express');
 const router = express.Router();
 const multer = require("multer");
 const fs = require('fs');
+const jwt = require('jsonwebtoken');
 var path = require('path');
 const connection = require('../../../../db/db');
  
 
-router.get('/havetodelete', (req, res) => {
+router.get('/havetodelete',authenticateToken, (req, res) => {
     res.render('updateanddeletepapers'); 
 });
-router.post('/updelpapers', (req, res) => {
+router.post('/updelpapers',authenticateToken, (req, res) => {
     res.redirect('/havetodelete'); 
 });
 
 
-router.get("/uploadsuccesspaper", async (req, res) => {
+router.get("/uploadsuccesspaper",authenticateToken, async (req, res) => {
     const allUsers = await new Promise((resolve, reject)=> {
         //console.log(this);
         var pre = 2;
@@ -45,7 +46,7 @@ var upload = multer({
 }).single('file');
 
 
-router.post("/uploadfilepapers", (req, res) => {
+router.post("/uploadfilepapers",authenticateToken, (req, res) => {
     // console.log('helll');
     // console.log(req.body);
     // console.log('helll');
@@ -84,7 +85,7 @@ router.post("/uploadfilepapers", (req, res) => {
 });
 
 
-router.post('/watchpapers', async (req, res) => {
+router.post('/watchpapers',authenticateToken, async (req, res) => {
     console.log('chlo');
     console.log(req.body);
     var pre = 2;
@@ -107,7 +108,7 @@ router.post('/watchpapers', async (req, res) => {
 
 
 
-router.post('/deletethispp', async(req, res) => {
+router.post('/deletethispp',authenticateToken, async(req, res) => {
     console.log(req.body);
     var pre = 2;
     const user = {
@@ -130,5 +131,23 @@ router.post('/deletethispp', async(req, res) => {
     res.redirect('/uploadsuccesspaper');
 });
 
+function authenticateToken(req, res, next) {
+    console.log(req.cookies);
+try {
+        const token = req.cookies.auth_token;
+        if (token)
+        {
+            const  user_auth  = jwt.verify(token, process.env.SECRET_KEY || "UNSECURED_JWT_PRIVATE_TOKEN");
+            req.user_auth = user_auth; 
+            next();   
+    } else
+        {
+            res.redirect('/adminloginpanel');
+        }    
+    }
+    catch (error) { 
+            res.redirect('/adminloginpanel');
+    }
+}
 
 module.exports = router;

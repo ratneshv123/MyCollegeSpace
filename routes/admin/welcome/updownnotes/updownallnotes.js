@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const multer = require("multer");
+const jwt = require('jsonwebtoken');
 const fs = require('fs');
 var path = require('path');
 const connection = require('../../../../db/db');
 
 //idhr se shuru hai 
 
-router.get('/updelnotes', (req, res) => {
+router.get('/updelnotes',authenticateToken, (req, res) => {
     res.render('updateanddeletenotes'); 
 });
 
@@ -25,7 +26,7 @@ var upload = multer({
     storage: storage,
 }).single('file');
 
-router.post("/upnotes", (req, res) => {
+router.post("/upnotes",authenticateToken, (req, res) => {
     console.log(req.body);
     let user;
   upload(req, res, function (err) {
@@ -71,7 +72,7 @@ router.post("/upnotes", (req, res) => {
 
 // watching the semester wise books route is below here 
 
-router.post('/watchnotes', async(req, res) => {
+router.post('/watchnotes',authenticateToken, async(req, res) => {
     console.log(req.body);
     var pre = 2;
     const user = {
@@ -93,7 +94,7 @@ router.post('/watchnotes', async(req, res) => {
 
 // deleting the books of particular semester
 
-router.post('/deletethisnote', async(req, res) => {
+router.post('/deletethisnote',authenticateToken, async(req, res) => {
     console.log(req.body);
     var pre = 2;
     const user = {
@@ -129,6 +130,24 @@ router.post('/deletethisnote', async(req, res) => {
     res.render('updateanddeletenotes',{users:alluser});
 });
 
+function authenticateToken(req, res, next) {
+    console.log(req.cookies);
+try {
+        const token = req.cookies.auth_token;
+        if (token)
+        {
+            const  user_auth  = jwt.verify(token, process.env.SECRET_KEY || "UNSECURED_JWT_PRIVATE_TOKEN");
+            req.user_auth = user_auth; 
+            next();   
+    } else
+        {
+            res.redirect('/adminloginpanel');
+        }    
+    }
+    catch (error) { 
+            res.redirect('/adminloginpanel');
+    }
+}
 
 
 module.exports = router;

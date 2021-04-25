@@ -8,13 +8,13 @@ router.get('/', (req, res) => {
     res.render('home',{message:message});
 });
 
-router.get('/home', (req, res) => {
+router.get('/home',authenticateToken, (req, res) => {
     res.clearCookie('auth_token');
     var message = "";
     res.render('home',{message:message});
 });
 
-router.get('/homechle', (req, res) => {
+router.get('/homechle',authenticateToken, (req, res) => {
     res.clearCookie('auth_token');
     var message = "";
     res.render('home',{message:message});
@@ -22,24 +22,20 @@ router.get('/homechle', (req, res) => {
 
 function authenticateToken(req, res, next) {
     console.log(req.cookies);
-    const token = req.cookies.auth_token;
-    if (token) {
-        // const token = req.cookies.auth_token;
-        const user_auth = jwt.verify(token, process.env.SECRET_KEY || "UNSECURED_JWT_PRIVATE_TOKEN");
-        // console.log('hewe');
-        // console.log(user_auth);
-        // console.log('hewe');
-    //    const user= jwt.verify(token, process.env.SECRET_KEY, (err, payload) => {
-    //         // const id = payload.id;
-    //         const user = {
-    //             email: payload.email
-    //         }
-            req.user_auth = user_auth;
+try {
+        const token = req.cookies.auth_token;
+        if (token)
+        {
+            const  user_auth  = jwt.verify(token, process.env.SECRET_KEY || "UNSECURED_JWT_PRIVATE_TOKEN");
+            req.user_auth = user_auth; 
             next();   
-    //     });   
+    } else
+        {
+            res.redirect('/');
+        }    
     }
-    else {
-        res.redirect('/');
+    catch (error) {
+            res.redirect('/');
     }
 }
 
