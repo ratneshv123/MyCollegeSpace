@@ -92,7 +92,7 @@ router.post('/deletethistt',authenticateToken, (req, res) => {
         name:req.body.Iname,
     }
 
-    var filePath = 'G:/collegespace/public/uploading/timetable/'+user.name+'.pdf'; 
+    var filePath = 'G:/MyCollegeSpace/public/uploading/timetable/'+user.name+'.pdf'; 
     fs.unlinkSync(filePath);
 
     const data = [[user.name]];

@@ -23,9 +23,6 @@ router.get('/homechle', authenticateToken, (req, res) => {
 });
 
 
-
-
-
 router.post('/signinuser', async (req, res) => {
     console.log(req.body);
 
@@ -55,13 +52,18 @@ router.post('/signinuser', async (req, res) => {
         password: req.body.Ipassword
     };
     //  console.log('hello');
-    const maxAge = 60000 * 60 * 24;
+    const maxAge = 60000 * 5;
    await new Promise((resolve, reject) => {
         const query = `SELECT password FROM signup WHERE email=?`;
         connection.query(query,user.email, (err, result) => {
             if (err) {
                 res.status(404).send(`Not Found` + err);
                 reject(new Error('Something failed (Record Insertion) :' + err));
+            }
+            if (result.length == 0)
+            {
+                var message = "Invalid Email or Password";
+                res.render('home',{message:message}); 
             }
             bcrypt.compare(user.password,result[0].password, (err, result) => {
                 if (result === true) {

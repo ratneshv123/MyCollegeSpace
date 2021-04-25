@@ -103,7 +103,7 @@ router.post('/deletethisnote',authenticateToken, async(req, res) => {
         presence:pre
     }
 
-    var filePath = 'G:/collegespace/public/uploading/notes/'+user.name+'.pdf'; 
+    var filePath = 'G:/MyCollegeSpace/public/uploading/notes/'+user.name+'.pdf'; 
     fs.unlinkSync(filePath);
  
     const data = [[user.name],[user.id],[user.presence]];

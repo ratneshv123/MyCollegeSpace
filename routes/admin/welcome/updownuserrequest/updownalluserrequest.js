@@ -74,11 +74,11 @@ router.post('/paperdeleterequest',authenticateToken, async (req, res) => {
         id: req.body.delid
     }
 
-    var filePath = 'G:/collegespace/public/uploading/userrequest/'+user.name+'.pdf'; 
+    var filePath = 'G:/MyCollegeSpace/public/uploading/userrequest/'+user.name+'.pdf'; 
     fs.unlinkSync(filePath);
 
     const data = [[user.presence],[user.name],[user.id]];
-    await new Promise((resolve, reject) => {
+    await new Promise((resolve, reject) => { 
         const query = `UPDATE mcapapers SET presence =? WHERE name=? AND id=?`;
         connection.query(query,data, (err, result) => {
             if (err) reject(new Error('something failed:'+err));
