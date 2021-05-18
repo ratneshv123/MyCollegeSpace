@@ -26,11 +26,9 @@ router.post("/upuserpapers",authenticateToken, (req, res) => {
           cb(null, "public/uploading/mcapapers");
         },
         filename: function (req, file, cb) {
-          cb(null,file.originalname + path.extname(file.originalname));
+          cb(null,file.originalname);
         },
     });
-    
-
     var upload = multer({
         storage: storage,
     }).single('file');
@@ -59,7 +57,10 @@ router.post("/upuserpapers",authenticateToken, (req, res) => {
          size: req.file.size,
          presence:pre
        };
-       console.log(user);
+       var str = user.name;
+     user.name = str.substr(0, str.length - 4);
+        console.log(user.name);
+        console.log(user);
         
         //database work-> store the user
          new Promise((resolve, reject)=> {
@@ -82,7 +83,7 @@ router.post("/upusernotes",authenticateToken, (req, res) => {
           cb(null, "public/uploading/notes");
         },
         filename: function (req, file, cb) {
-          cb(null,file.originalname + path.extname(file.originalname));
+            cb(null,file.originalname);
         },
     });
     
@@ -116,8 +117,11 @@ router.post("/upusernotes",authenticateToken, (req, res) => {
        size:req.file.size,
        presence:pre
      };
-     console.log(user);
-      
+     var str = user.name;
+      user.name = str.substr(0, str.length - 4);
+     console.log('heshe');
+     console.log(user.name);
+     console.log('heshe');
       //database work-> store the user
        new Promise((resolve, reject)=> {
             //console.log(this);
@@ -139,7 +143,7 @@ router.post("/upuserbooks",authenticateToken, (req, res) => {
           cb(null, "public/uploading/books");
         },
         filename: function (req, file, cb) {
-          cb(null,file.originalname + path.extname(file.originalname));
+            cb(null,file.originalname);
         },
     });
     
@@ -173,8 +177,9 @@ router.post("/upuserbooks",authenticateToken, (req, res) => {
        size:req.file.size,
        presence:pre
      };
-     console.log(user);
-      
+      var str = user.name;
+     user.name = str.substr(0, str.length - 4);
+     console.log(user.name);
       //database work-> store the user
        new Promise((resolve, reject)=> {
             //console.log(this);

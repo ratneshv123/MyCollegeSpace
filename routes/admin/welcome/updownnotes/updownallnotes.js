@@ -100,15 +100,27 @@ router.post('/deletethisnote',authenticateToken, async(req, res) => {
     const user = {
         name: req.body.delnotesname,
         id: req.body.delnotesid,
+        notesid:req.body.delprimenotesid,
         presence:pre
     }
 
+
+    const datacheck=[[user.name],[user.presence]]
+    const checking=await new Promise((resolve, reject) => {
+        const query = `SELECT name FROM notes WHERE name=? AND presence=?`;
+        connection.query(query,datacheck, (err, result) => {
+            if (err) reject(new Error('something failed:'+err));
+                resolve(result);
+        });
+    });
+
     var filePath = 'G:/MyCollegeSpace/public/uploading/notes/'+user.name+'.pdf'; 
+    if(checking.length==1)
     fs.unlinkSync(filePath);
  
-    const data = [[user.name],[user.id],[user.presence]];
+    const data = [[user.name], [user.id],[user.notesid],[user.presence]];
     await new Promise((resolve, reject) => {
-        const query = `DELETE FROM notes WHERE name=? AND id=? AND presence=?`;
+        const query = `DELETE FROM notes WHERE name=? AND id=? AND notesid=? AND presence=?`;
         connection.query(query,data, (err, result) => {
             if (err) reject(new Error('something failed:'+err));
                 resolve(result);

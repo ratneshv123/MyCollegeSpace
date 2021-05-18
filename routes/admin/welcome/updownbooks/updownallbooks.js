@@ -88,7 +88,7 @@ router.post("/upbooks",authenticateToken, (req, res) => {
        place: req.file.path,
        id:req.body.paperid,
        type: req.file.mimetype,
-           size: req.file.size,
+       size: req.file.size,
        presence:pre
      };
      console.log(user);
@@ -128,6 +128,7 @@ router.post('/watchbooks',authenticateToken, async(req, res) => {
             resolve(result);
         });
     });
+    console.log(alluser);
      res.render('updateanddeletebooks',{users:alluser});
 });
 
@@ -135,24 +136,38 @@ router.post('/watchbooks',authenticateToken, async(req, res) => {
 
 // deleting the books of particular semester
 
-router.post('/deletethisbook',authenticateToken, async(req, res) => {
+router.post('/deletethisbook', authenticateToken, async (req, res) => {
+    console.log('sdfa');
     console.log(req.body);
-
     console.log('hell');    
     var pre = 2;
     const user = {
         name: req.body.delbookname,
         id: req.body.delbookid,
+        bookid:req.body.delbookprimeid,
         presence:pre
     }
 
-    var filePath = 'G:/MyCollegeSpace/public/uploading/books/'+user.name+'.pdf'; 
-    fs.unlinkSync(filePath);
+    
  
-    const data = [[user.name], [user.id], [user.presence]];
+    const datacheck=[[user.name],[user.presence]]
+    const checking=await new Promise((resolve, reject) => {
+        const query = `SELECT name FROM books WHERE name=? AND presence=?`;
+        connection.query(query,datacheck, (err, result) => {
+            if (err) reject(new Error('something failed:'+err));
+                resolve(result);
+        });
+    });
+    
+
+    var filePath = 'G:/MyCollegeSpace/public/uploading/books/'+user.name+'.pdf'; 
+    if(checking.length==1)
+    fs.unlinkSync(filePath);
+
+    const data = [[user.name], [user.id],[user.bookid],[user.presence]];
     console.log(data);
     await new Promise((resolve, reject) => {
-        const query = `DELETE FROM books WHERE name=? AND id=? AND presence=?`;
+        const query = `DELETE FROM books WHERE name=? AND id=? AND bookid=? AND presence=?`;
         connection.query(query,data, (err, result) => {
             if (err) reject(new Error('something failed:'+err));
                 resolve(result);

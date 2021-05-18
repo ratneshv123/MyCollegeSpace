@@ -86,18 +86,32 @@ router.post("/uptimetable",authenticateToken, (req, res) => {
     res.redirect('/uploadsuccesstimetable');
 });
 
-router.post('/deletethistt',authenticateToken, (req, res) => {
+router.post('/deletethistt',authenticateToken, async(req, res) => {
     console.log(req.body);
     const user = {
-        name:req.body.Iname,
+        name: req.body.Iname,
+        timetableid:req.body.Itimetableprimeid
     }
 
-    var filePath = 'G:/MyCollegeSpace/public/uploading/timetable/'+user.name+'.pdf'; 
+
+    const datacheck=[[user.name]]
+    const checking=await new Promise((resolve, reject) => {
+        const query = `SELECT name FROM timetable WHERE name=?`;
+        connection.query(query,datacheck, (err, result) => {
+            if (err) reject(new Error('something failed:'+err));
+                resolve(result);
+        });
+    });
+    
+
+    var filePath = 'G:/MyCollegeSpace/public/uploading/timetable/'+user.name+'.pdf';
+    if(checking.length==1)
     fs.unlinkSync(filePath);
 
-    const data = [[user.name]];
+
+    const data = [[user.name],[user.timetableid]];
     new Promise((resolve, reject) => {
-        const query = `DELETE FROM timetable WHERE name=?`;
+        const query = `DELETE FROM timetable WHERE name=? AND timetableid=?`;
         connection.query(query,data, (err, result) => {
             if (err) reject(new Error('something failed:'+err));
                 resolve(result);

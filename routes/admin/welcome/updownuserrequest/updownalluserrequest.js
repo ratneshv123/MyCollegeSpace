@@ -74,8 +74,8 @@ router.post('/paperdeleterequest',authenticateToken, async (req, res) => {
         id: req.body.delid
     }
 
-    var filePath = 'G:/MyCollegeSpace/public/uploading/userrequest/'+user.name+'.pdf'; 
-    fs.unlinkSync(filePath);
+    var filePath = 'G:/MyCollegeSpace/public/uploading/mcapapers/'+user.name+'.pdf'; 
+     fs.unlinkSync(filePath);
 
     const data = [[user.presence],[user.name],[user.id]];
     await new Promise((resolve, reject) => { 
@@ -128,7 +128,7 @@ router.post('/notesdeleterequest',authenticateToken, async (req, res) => {
         id: req.body.delid
     }
 
-    var filePath = 'G:/collegespace/public/uploading/notes/'+user.name+'.pdf'; 
+    var filePath = 'G:/MyCollegeSpace/public/uploading/notes/'+user.name+'.pdf'; 
     fs.unlinkSync(filePath);
 
     const data = [[user.presence],[user.name],[user.id]];
@@ -184,7 +184,7 @@ router.post('/booksdeleterequest',authenticateToken, async (req, res) => {
     }
 
     var filePath = 'G:/collegespace/public/uploading/books/'+user.name+'.pdf'; 
-    fs.unlinkSync(filePath);
+     fs.unlinkSync(filePath);
 
     const data = [[user.presence],[user.name],[user.id]];
     await new Promise((resolve, reject) => {

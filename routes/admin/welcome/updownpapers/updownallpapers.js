@@ -114,21 +114,48 @@ router.post('/deletethispp',authenticateToken, async(req, res) => {
     const user = {
         name: req.body.delpaper,
         id: req.body.delid,
+        mcapaperid:req.body.mcapaperprimeid,
         presence:pre
     }
 
-    var filePath = 'G:/MyCollegeSpace/public/uploading/mcapapers/'+user.name+'.pdf'; 
-    fs.unlinkSync(filePath);
-
-    const data = [[user.name],[user.id],[user.presence]];
-    new Promise((resolve, reject) => {
-        const query = `DELETE FROM mcapapers WHERE name=? AND id=? AND presence=?`;
-        connection.query(query,data, (err, result) => {
+    const datacheck=[[user.name],[user.presence]]
+    const checking=await new Promise((resolve, reject) => {
+        const query = `SELECT name FROM mcapapers WHERE name=? AND presence=?`;
+        connection.query(query,datacheck, (err, result) => {
             if (err) reject(new Error('something failed:'+err));
                 resolve(result);
         });
     });
-    res.redirect('/uploadsuccesspaper');
+    
+    var filePath = 'G:/MyCollegeSpace/public/uploading/mcapapers/'+user.name+'.pdf'; 
+    if(checking.length==1)
+    fs.unlinkSync(filePath);
+
+
+    const data = [[user.name], [user.id], [user.mcapaperid], [user.presence]];
+    console.log(data);
+    new Promise((resolve, reject) => {
+        const query = `DELETE FROM mcapapers WHERE name=? AND id=? AND mcapaperid=? AND presence=?`;
+        connection.query(query,data,(err, result) => {
+            if (err) reject(new Error('something failed:'+err));
+                resolve(result);
+        });
+    });
+
+
+    const allUsers = await new Promise((resolve, reject)=> {
+        //console.log(this);
+        var pre = 2;
+        const returnpapers = [[user.id], [pre]];
+        console.log(returnpapers);
+        const query = `SELECT * FROM mcapapers where id=? AND presence=?`;
+        
+        connection.query(query,returnpapers,(err, result)=>{
+            if (err) reject(new Error('Something failed (Record Insertion) :' + err));
+            resolve (result);
+        });
+    });
+     res.render('updateanddeletepapers', {users: allUsers});
 });
 
 function authenticateToken(req, res, next) {
