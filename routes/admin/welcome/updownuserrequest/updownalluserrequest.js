@@ -176,14 +176,14 @@ router.post('/notesacceptrequest',authenticateToken, async(req, res) => {
 
 router.post('/booksdeleterequest',authenticateToken, async (req, res) => {
     console.log(req.body);
-    var pre = 3;
+    var pre = 2;
     const user = {
         presence:pre,
         name: req.body.delname,
         id: req.body.delid
     }
 
-    var filePath = 'G:/collegespace/public/uploading/books/'+user.name+'.pdf'; 
+    var filePath = 'G:/MyCollegeSpace/public/uploading/books/'+user.name+'.pdf'; 
      fs.unlinkSync(filePath);
 
     const data = [[user.presence],[user.name],[user.id]];

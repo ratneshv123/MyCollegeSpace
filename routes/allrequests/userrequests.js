@@ -6,8 +6,9 @@ var path = require('path');
 const jwt = require('jsonwebtoken');
 const connection = require('../../db/db');
 
-router.get('/gotomyrequests',authenticateToken, (req, res) => {
-    res.render('myrequests'); 
+router.get('/gotomyrequests', authenticateToken, (req, res) => {
+    var message = "";
+    res.render('myrequests',{message:message}); 
 });
 
 router.post('/makerequest', (req, res) => {
@@ -72,7 +73,8 @@ router.post("/upuserpapers",authenticateToken, (req, res) => {
                      });
                  }); 
     })
-      res.redirect('/gotomyrequests');
+    var message = "Your Request is Registered";
+    res.render('myrequests',{message:message}); 
   });
 
 
@@ -132,7 +134,8 @@ router.post("/upusernotes",authenticateToken, (req, res) => {
                    });
                }); 
   })
-    res.redirect('/gotomyrequests');
+  var message = "Your Request is Registered";
+  res.render('myrequests',{message:message});
   });
 
 
@@ -190,7 +193,8 @@ router.post("/upuserbooks",authenticateToken, (req, res) => {
                    });
                }); 
   })
-    res.redirect('/gotomyrequests');
+  var message = "Your Request is Registered";
+  res.render('myrequests',{message:message});
 });
   
 function authenticateToken(req, res, next) {
