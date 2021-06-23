@@ -87,7 +87,7 @@ router.post('/lookbooks',authenticateToken, async(req, res) => {
 
 router.post('/watchtheuserbook',authenticateToken,async(req, res) => {
     console.log(req.body);
-    console.log('vishalharami');
+    
     const user = {
         name: req.body.name,
         id:req.body.id

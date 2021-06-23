@@ -14,7 +14,7 @@ const { ValidationError } = require('joi');
 
 router.get('/signuup', (req, res) => {
     var message = "";
-    res.render('signuup', { success: '' ,message:message});
+    res.render('signuup',{ success: '' ,message:message});
 });
 
 router.get('/homechle', authenticateToken, (req, res) => {
@@ -51,7 +51,7 @@ router.post('/signinuser', async (req, res) => {
         email: req.body.Iemail,
         password: req.body.Ipassword
     };
-    //  console.log('hello');
+    
     const maxAge = 60000 * 5;
    await new Promise((resolve, reject) => {
         const query = `SELECT password FROM signup WHERE email=?`;
@@ -68,18 +68,18 @@ router.post('/signinuser', async (req, res) => {
             bcrypt.compare(user.password,result[0].password, (err, result) => {
                 if (result === true) {
                     // console.log('success');
-                    const token = jwt.sign({email: user.email}, process.env.SECRET_KEY,{ expiresIn: maxAge });
+                    const token = jwt.sign({email: user.email},process.env.SECRET_KEY,{expiresIn: maxAge });
                     // res.header("auth-token", token);
-                    res.cookie('auth_token', token, {maxAge: maxAge, httpOnly: true });
-                    console.log(token);
+                    res.cookie('auth_token', token, {maxAge: maxAge});
+                    // console.log(token);
                     res.render('usersignin', { user: user });
                 } else 
                 {
                     console.log('failure');
                     var message = "Invalid Email or Password";
                     res.render('home',{message:message});
-                // res.status(404).send(`Not Found` + err);
-                // reject(new Error('Something failed (Record Insertion) :' + err));
+                    // res.status(404).send(`Not Found` + err);
+                    // reject(new Error('Something failed (Record Insertion) :' + err));
                 }
             });
              resolve(result);

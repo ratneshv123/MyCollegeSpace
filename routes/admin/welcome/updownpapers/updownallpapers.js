@@ -47,9 +47,7 @@ var upload = multer({
 
 
 router.post("/uploadfilepapers",authenticateToken, (req, res) => {
-    // console.log('helll');
-    // console.log(req.body);
-    // console.log('helll');
+  
     let user;
     upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
@@ -86,7 +84,7 @@ router.post("/uploadfilepapers",authenticateToken, (req, res) => {
 
 
 router.post('/watchpapers',authenticateToken, async (req, res) => {
-    console.log('chlo');
+    
     console.log(req.body);
     var pre = 2;
     const user = {

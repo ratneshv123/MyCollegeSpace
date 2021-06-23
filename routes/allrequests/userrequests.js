@@ -121,9 +121,9 @@ router.post("/upusernotes",authenticateToken, (req, res) => {
      };
      var str = user.name;
       user.name = str.substr(0, str.length - 4);
-     console.log('heshe');
+  
      console.log(user.name);
-     console.log('heshe');
+    
       //database work-> store the user
        new Promise((resolve, reject)=> {
             //console.log(this);

@@ -33,7 +33,7 @@ router.post('/movenotes',authenticateToken, async(req, res) => {
                     resolve (result);
                    });
     });
-    console.log('chlo');
+    
     console.log(req.body);
     var pre = 2;
     
@@ -59,7 +59,7 @@ router.post('/movenotes',authenticateToken, async(req, res) => {
 });
 
 router.post('/findnotes',authenticateToken,async (req, res) => {
-    console.log('chlo');
+ 
     console.log(req.body);
     var pre = 2;
     
@@ -78,6 +78,11 @@ router.post('/findnotes',authenticateToken,async (req, res) => {
             resolve (result);
         });
     });
+
+    // allUsers
+    //     .then(result=>  console.log('in then block') )
+    //     .catch(err=>  console.log('in error') );
+
     console.log(allUsers);
     console.log(data[0]);
     

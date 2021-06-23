@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const { route } = require('./userpapers');
 
 router.post('/findpaper',authenticateToken, async (req, res) => {
-    console.log('chlo');
+  
     console.log(req.body);
     
     var pre = 2;
@@ -25,9 +25,9 @@ router.post('/findpaper',authenticateToken, async (req, res) => {
         });
     });
     
-    console.log('jaskfjasdfla');
+  
     console.log(allUsers);
-    console.log('jaskfjasdfla');
+    
     console.log(data[0]);
     
         res.render('papers', { users: allUsers });

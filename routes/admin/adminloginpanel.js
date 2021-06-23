@@ -22,7 +22,7 @@ router.post('/adminloginpage', (req, res) => {
 });
 
 router.get('/welcome', (req, res) => {
-    console.log('successs');
+ //   console.log('successs');
     res.render('welcomeadmin');
 });
 
@@ -38,7 +38,7 @@ router.get('/alladminregitrationrequest',authenticateToken, async(req, res) => {
             resolve(result);
         });
     });
-    console.log(alluser);
+    // console.log(alluser);
     res.render('updateanddeleteadminrequest',{users:alluser});
 });
 
@@ -46,12 +46,11 @@ router.post('/acceptingadminrequest',authenticateToken, async (req, res) => {
     const acceptedval = 0;
     const datat = [[acceptedval], [req.body.id]];
     await new Promise((resolve, reject)=> {
-        //console.log(this);
+        
         const query = `UPDATE admin SET accepted=? WHERE id=? `;
         connection.query(query,datat,(err, result)=> {
             if (err)    reject(new Error('Something failed (Record Updation) :'+err));  
             resolve(result);
-           // console.log(result);
         });
     });
     const data = 1;
@@ -62,13 +61,13 @@ router.post('/acceptingadminrequest',authenticateToken, async (req, res) => {
             resolve(result);
         });
     });
-    console.log(alluser);
+    // console.log(alluser);
     res.render('updateanddeleteadminrequest',{users:alluser});
 });
 
 
 router.post('/rejectingadminrequest',authenticateToken, async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     new Promise((resolve, reject) => {
         const query = `DELETE FROM admin WHERE id=?`;
         connection.query(query,req.body.id, (err, result) => {
@@ -141,7 +140,7 @@ router.post('/adminsignup',async(req, res) => {
             }
             resolve(result);
             var message=""
-            res.render('signuup', { success: 'Registered Your Request for Admin Login , You will get Notified Via mail when Admin will accept your request.',message:message });
+            res.render('signuup', { success: 'Registered Your Request for Admin Login , You can come back after three days to check your admin request',message:message });
         });
     });
 });
@@ -173,7 +172,6 @@ router.post('/adminlogin', async (req, res) => {
     const maxAge = 60000 * 60 * 24;
     const data = [[user.name], [user.accepted]];
     // console.log(data);
-    // console.log('hello');
     try {
         await new Promise((resolve, reject) => {
             const query = `SELECT password FROM admin WHERE username=? AND accepted=?`;
@@ -191,10 +189,10 @@ router.post('/adminlogin', async (req, res) => {
                 {
                 bcrypt.compare(user.password,result[0].password, (err, result) => {
                     if (result === true) {
-                        const token = jwt.sign({name: user.name}, process.env.SECRET_KEY,{ expiresIn: maxAge });
+                    const token = jwt.sign({name: user.name}, process.env.SECRET_KEY,{ expiresIn: maxAge });
                     // res.header("auth-token", token);
                     res.cookie('auth_token', token, {maxAge: maxAge, httpOnly: true });
-                    console.log(token);
+                    // console.log(token);
                        res.render('welcomeadmin');  
                     } else
                     {

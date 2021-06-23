@@ -61,8 +61,7 @@ var storage = multer.diskStorage({
     cb(null,file.originalname);
   },
 });
-
-
+ 
 var upload = multer({
   storage: storage,
 }).single('file');
@@ -71,17 +70,9 @@ router.post("/upbooks",authenticateToken, (req, res) => {
     console.log(req.body);
     let user;
   upload(req, res, function (err) {
-    if (err instanceof multer.MulterError) {
-      // A Multer error occurred when uploading.
-      res.send(err)
-    } else if (err) {
-      // An unknown error occurred when uploading.
+     if (err) {
         res.send(err);
-    } else
-    {
-     // res.redirect('/buysuccess');
-    }
-     // console.log(req.file);
+    } 
       var pre = 2;
        user = { 
        name: req.file.originalname,
@@ -136,10 +127,7 @@ router.post('/watchbooks',authenticateToken, async(req, res) => {
 
 // deleting the books of particular semester
 
-router.post('/deletethisbook', authenticateToken, async (req, res) => {
-    console.log('sdfa');
-    console.log(req.body);
-    console.log('hell');    
+router.post('/deletethisbook', authenticateToken, async (req, res) => {    
     var pre = 2;
     const user = {
         name: req.body.delbookname,
@@ -148,8 +136,6 @@ router.post('/deletethisbook', authenticateToken, async (req, res) => {
         presence:pre
     }
 
-    
- 
     const datacheck=[[user.name],[user.presence]]
     const checking=await new Promise((resolve, reject) => {
         const query = `SELECT name FROM books WHERE name=? AND presence=?`;
@@ -194,14 +180,14 @@ function authenticateToken(req, res, next) {
     console.log(req.cookies);
 try {
         const token = req.cookies.auth_token;
-        if (token)
+        if(token)
         {
             const  user_auth  = jwt.verify(token, process.env.SECRET_KEY || "UNSECURED_JWT_PRIVATE_TOKEN");
             req.user_auth = user_auth; 
             next();   
-    } else
+    }else    
         {
-            res.redirect('/adminloginpanel');
+            res.redirect('/adminloginpanel'); 
         }    
     }
     catch (error) { 

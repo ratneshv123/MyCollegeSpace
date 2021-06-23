@@ -2,13 +2,8 @@ require('dotenv').config()
 const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
-// const session = require('express-session');
 const home = require('./routes/home');
-const register = require('./routes/register');
-const fs = require('fs');
-const bufferFrom = require('buffer-from');
-const multer = require('multer');
-const db = require('./db/db');
+const register = require('./routes/register'); 
 const test = require('./routes/test');
 const userpapers = require('./routes/papers/userpapers');
 const findthepaper = require('./routes/papers/findthepaper');  
@@ -62,6 +57,7 @@ app.use(updownalluserrequest);
 app.use(yourprofile);
 app.use(yourspace);
 
+// console.log(module); 
 
 const port = process.env.PORT || 3000;
 app.listen(port, ()=> {
